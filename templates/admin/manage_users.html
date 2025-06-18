@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quản lý tài khoản</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='manage_users.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Danh sách người dùng</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Quyền</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.FullName }}</td>
+            <td>{{ user.Email }}</td>
+            <td>{{ user.Role }}</td>
+            <td>
+              <form
+                action="{{ url_for('delete_user', user_id=user.UserID) }}"
+                method="POST"
+                onsubmit="return confirm('Bạn có chắc muốn xoá người này?');"
+              >
+                <button type="submit" class="btn-danger">Xoá</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{{ url_for('admin_home') }}" class="btn">Quay lại</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thông tin cá nhân</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='profile.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-shield-alt"></i>
+          <span>BẢO HIỂM AI</span>
+        </div>
+        <nav>
+          <a href="{{ url_for('index') }}"
+            ><i class="fas fa-home"></i> Trang chủ</a
+          >
+          <a href="{{ url_for('about') }}"
+            ><i class="fas fa-info-circle"></i> Giới thiệu</a
+          >
+          <a href="{{ url_for('predict') }}"
+            ><i class="fas fa-chart-line"></i> Dự đoán</a
+          >
+          <a href="{{ url_for('history') }}"
+            ><i class="fas fa-history"></i> Lịch sử</a
+          >
+          {% if current_user.is_authenticated and current_user.role == 'admin'
+          %}
+          <a href="{{ url_for('manage_users') }}">Quản lý tài khoản</a>
+          <a href="{{ url_for('manage_predictions') }}">Quản lý dự đoán</a>
+          {% endif %} {% if current_user.is_authenticated and current_user.role
+          == 'user' %}
+          <a href="{{ url_for('profile') }}" class="active"
+            ><i class="fas fa-id-card"></i> Hồ sơ cá nhân</a
+          >
+          {% endif %} {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}"
+            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+          >
+          {% else %}
+          <a href="{{ url_for('login') }}"
+            ><i class="fas fa-sign-in-alt"></i> Đăng nhập</a
+          >
+          {% endif %}
+        </nav>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="profile-card">
+        <h2><i class="fas fa-user-circle"></i> Thông tin cá nhân</h2>
+
+        <div id="info-form">
+          <label for="fullname">Họ và tên:</label>
+          <input type="text" id="fullname" placeholder="Nhập họ và tên" />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="Nhập email" />
+
+          <button onclick="saveInfo()">Lưu thông tin</button>
+        </div>
+
+        <div id="display-info" style="display: none">
+          <p><strong>Họ và tên:</strong> <span id="display-fullname"></span></p>
+          <p><strong>Email:</strong> <span id="display-email"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Bảo hiểm AI</h3>
+            <p>
+              Công nghệ AI tiên tiến giúp dự đoán chi phí bảo hiểm chính xác và
+              nhanh chóng.
+            </p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+              <li><a href="{{ url_for('about') }}">Giới thiệu</a></li>
+              <li><a href="{{ url_for('predict') }}">Dự đoán bảo hiểm</a></li>
+              <li><a href="{{ url_for('history') }}">Lịch sử dự đoán</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Hỗ trợ</h3>
+            <ul>
+              <li><a href="#">Câu hỏi thường gặp</a></li>
+              <li><a href="#">Hướng dẫn sử dụng</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+              <li><a href="#">Điều khoản dịch vụ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1,
+                TP.HCM
+              </li>
+              <li><i class="fas fa-phone"></i> (028) 1234 5678</li>
+              <li><i class="fas fa-envelope"></i> info@baohiemai.com</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Bảo hiểm AI. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const userID = "{{ current_user.id }}";
+
+      const key = "user_profile_" + userID;
+
+      window.onload = () => {
+        const data = localStorage.getItem(key);
+        if (data) {
+          const profile = JSON.parse(data);
+          document.getElementById("display-fullname").innerText =
+            profile.fullname;
+          document.getElementById("display-email").innerText = profile.email;
+          document.getElementById("info-form").style.display = "none";
+          document.getElementById("display-info").style.display = "block";
+        }
+      };
+
+      function saveInfo() {
+        const fullname = document.getElementById("fullname").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (!fullname || !email) {
+          alert("Vui lòng nhập đầy đủ họ tên và email.");
+          return;
+        }
+
+        const profile = { fullname, email };
+        localStorage.setItem(key, JSON.stringify(profile));
+        location.reload();
+      }
+    </script>
+  </body>
+</html>

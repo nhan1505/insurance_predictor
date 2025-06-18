@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trang quản trị</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='admin.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Chào {{ admin.name }} (Admin)</h2>
+      <a href="{{ url_for('manage_users') }}" class="btn">Quản lý tài khoản</a>
+      <a href="{{ url_for('manage_predictions') }}" class="btn"
+        >Quản lý dự đoán</a
+      >
+      <a href="{{ url_for('logout') }}" class="btn">Đăng xuất</a>
+    </div>
+  </body>
+</html>

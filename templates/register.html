@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Đăng ký</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Đăng ký</h2>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+      <form method="POST">
+        <input type="text" name="full_name" placeholder="Họ tên" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Mật khẩu"
+          required
+        />
+        <button type="submit">Đăng ký</button>
+      </form>
+      <p>Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a></p>
+    </div>
+  </body>
+</html>

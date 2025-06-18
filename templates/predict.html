@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dự đoán bảo hiểm</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='predict.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-shield-alt"></i>
+          <span>BẢO HIỂM AI</span>
+        </div>
+        <nav>
+          <a href="{{ url_for('index') }}"
+            ><i class="fas fa-home"></i> Trang chủ</a
+          >
+          <a href="{{ url_for('about') }}"
+            ><i class="fas fa-info-circle"></i> Giới thiệu</a
+          >
+          <a href="{{ url_for('predict') }}" class="active"
+            ><i class="fas fa-chart-line"></i> Dự đoán</a
+          >
+          <a href="{{ url_for('history') }}"
+            ><i class="fas fa-history"></i> Lịch sử</a
+          >
+          {% if current_user.is_authenticated and current_user.role == 'user' %}
+          <a href="{{ url_for('profile') }}"
+            ><i class="fas fa-id-card"></i> Hồ sơ cá nhân</a
+          >
+          {% endif %} {% if current_user.is_authenticated and current_user.role
+          == 'admin' %}
+          <a href="{{ url_for('manage_users') }}">Quản lý tài khoản</a>
+          <a href="{{ url_for('manage_predictions') }}">Quản lý dự đoán</a>
+          {% endif %} {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}"
+            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+          >
+          {% else %}
+          <a href="{{ url_for('login') }}"
+            ><i class="fas fa-sign-in-alt"></i> Đăng nhập</a
+          >
+          {% endif %}
+        </nav>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="hero-text">
+          <h1>Chỉ cần vài cú click, biết ngay chi phí bảo hiểm ước tính</h1>
+          <p class="subtitle">
+            Công nghệ AI tiên tiến giúp dự đoán chi phí bảo hiểm chính xác trong
+            vòng vài giây
+          </p>
+          <div class="features">
+            <div class="feature">
+              <i class="fas fa-bolt"></i>
+              <span>Nhanh chóng</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-lock"></i>
+              <span>Bảo mật</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-chart-pie"></i>
+              <span>Chính xác</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-box">
+          <div class="form-header">
+            <h2>Thông tin cá nhân</h2>
+            <p>Nhập thông tin để nhận dự đoán chính xác</p>
+          </div>
+          <form method="POST" action="/predict">
+            <div class="form-group">
+              <label>Tuổi:</label>
+              <div class="slider-container">
+                <input
+                  type="range"
+                  min="18"
+                  max="65"
+                  name="age"
+                  value="30"
+                  class="slider"
+                  oninput="ageVal.value = this.value"
+                />
+                <div class="slider-labels">
+                  <span>18</span>
+                  <span>65</span>
+                </div>
+                <output id="ageVal" class="slider-value">30</output>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Giới tính:</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="gender" value="Nam" checked />
+                  <span class="radio-custom"></span>
+                  <span class="radio-label">Nam</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="gender" value="Nữ" />
+                  <span class="radio-custom"></span>
+                  <span class="radio-label">Nữ</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Chỉ số BMI:</label>
+              <div class="input-with-icon">
+                <input
+                  type="number"
+                  name="bmi"
+                  value="24"
+                  step="0.1"
+                  class="styled-input"
+                />
+                <i
+                  class="fas fa-info-circle tooltip-icon"
+                  data-tooltip="BMI là chỉ số khối cơ thể (cân nặng / chiều cao²)"
+                ></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Hút thuốc:</label>
+              <div class="toggle-group">
+                <label class="toggle-option">
+                  <input type="radio" name="smoke" value="Có" />
+                  <span class="toggle-custom">Có</span>
+                </label>
+                <label class="toggle-option">
+                  <input type="radio" name="smoke" value="Không" checked />
+                  <span class="toggle-custom">Không</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Khu vực sinh sống:</label>
+              <select name="region" class="styled-select">
+                <option value="Bắc">Bắc</option>
+                <option value="Trung">Trung</option>
+                <option value="Nam">Nam</option>
+              </select>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label class="checkbox-option">
+                <input type="checkbox" name="chronic" value="1" />
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-label">Có bệnh mãn tính</span>
+              </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-calculator"></i> DỰ ĐOÁN NGAY
+            </button>
+          </form>
+
+          {% if prediction %}
+          <div class="result">
+            <div class="result-icon">
+              <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="result-content">
+              <p class="result-label">Chi phí bảo hiểm ước tính:</p>
+              <p class="result-value">{{ prediction }} USD</p>
+            </div>
+          </div>
+          {% else %}
+          <div class="result-placeholder">
+            <p>Hãy nhập tuổi của bạn trước nhé!</p>
+            <div class="loading">
+              <div class="loading-bar"></div>
+              <div class="loading-text">Đang phân tích dữ liệu sức khỏe...</div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Bảo hiểm AI</h3>
+            <p>
+              Công nghệ AI tiên tiến giúp dự đoán chi phí bảo hiểm chính xác và
+              nhanh chóng.
+            </p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+              <li><a href="{{ url_for('about') }}">Giới thiệu</a></li>
+              <li><a href="{{ url_for('predict') }}">Dự đoán bảo hiểm</a></li>
+              <li><a href="{{ url_for('history') }}">Lịch sử dự đoán</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Hỗ trợ</h3>
+            <ul>
+              <li><a href="#">Câu hỏi thường gặp</a></li>
+              <li><a href="#">Hướng dẫn sử dụng</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+              <li><a href="#">Điều khoản dịch vụ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1,
+                TP.HCM
+              </li>
+              <li><i class="fas fa-phone"></i> (028) 1234 5678</li>
+              <li><i class="fas fa-envelope"></i> info@baohiemai.com</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Bảo hiểm AI. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

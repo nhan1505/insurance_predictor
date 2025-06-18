@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giới Thiệu - Hệ Thống Dự Đoán Thông Minh</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='about.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-shield-alt"></i>
+          <span>BẢO HIỂM AI</span>
+        </div>
+        <nav>
+          <a href="{{ url_for('index') }}"
+            ><i class="fas fa-home"></i> Trang chủ</a
+          >
+          <a href="{{ url_for('about') }}" class="active"
+            ><i class="fas fa-info-circle"></i> Giới thiệu</a
+          >
+          <a href="{{ url_for('predict') }}"
+            ><i class="fas fa-chart-line"></i> Dự đoán</a
+          >
+          <a href="{{ url_for('history') }}"
+            ><i class="fas fa-history"></i> Lịch sử</a
+          >
+          {% if current_user.is_authenticated and current_user.role == 'admin'
+          %}
+          <a href="{{ url_for('manage_users') }}">Quản lý tài khoản</a>
+          <a href="{{ url_for('manage_predictions') }}">Quản lý dự đoán</a>
+          {% endif %} {% if current_user.is_authenticated %} {% if
+          current_user.is_authenticated and current_user.role == 'user' %}
+          <a href="{{ url_for('profile') }}"
+            ><i class="fas fa-id-card"></i> Hồ sơ cá nhân</a
+          >
+          {% endif %}
+          <a href="{{ url_for('logout') }}"
+            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+          >
+          {% else %}
+          <a href="{{ url_for('login') }}"
+            ><i class="fas fa-sign-in-alt"></i> Đăng nhập</a
+          >
+          {% endif %}
+        </nav>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <h1>Hệ Thống Dự Đoán Thông Minh</h1>
+        <p>
+          Công nghệ AI tiên tiến mang lại giải pháp dự đoán chính xác nhất cho
+          doanh nghiệp và cá nhân
+        </p>
+        <div class="btn-container">
+          <a href="predict.html" class="btn">Dùng Thử Ngay</a>
+          <a href="#contact" class="btn btn-outline">Liên Hệ</a>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section>
+        <h2 class="section-title">Về Chúng Tôi</h2>
+        <div class="about-cards">
+          <div class="card">
+            <h2><i class="fas fa-bullseye"></i> Sứ Mệnh</h2>
+            <p>
+              Chúng tôi cam kết cung cấp các giải pháp dự đoán thông minh với độ
+              chính xác cao nhất, giúp khách hàng đưa ra quyết định dựa trên dữ
+              liệu phân tích đáng tin cậy.
+            </p>
+          </div>
+          <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Tầm Nhìn</h2>
+            <p>
+              Trở thành nhà cung cấp giải pháp dự đoán AI hàng đầu tại Việt Nam,
+              ứng dụng công nghệ tiên tiến nhất để giải quyết các bài toán thực
+              tế trong kinh doanh và đời sống.
+            </p>
+          </div>
+          <div class="card">
+            <h2><i class="fas fa-chart-pie"></i> Giá Trị Cốt Lõi</h2>
+            <p>
+              Đổi mới sáng tạo - Minh bạch - Chính xác - Bảo mật. Chúng tôi đặt
+              chất lượng và trải nghiệm khách hàng lên hàng đầu trong mọi sản
+              phẩm và dịch vụ.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section>
+        <h2 class="section-title">Tính Năng Nổi Bật</h2>
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Thuật Toán AI Mạnh Mẽ</h3>
+            <p>
+              Sử dụng các mô hình machine learning tiên tiến được huấn luyện
+              trên lượng dữ liệu lớn
+            </p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3>Tốc Độ Xử Lý Nhanh</h3>
+            <p>
+              Cho kết quả dự đoán chỉ trong vài giây nhờ hệ thống server mạnh mẽ
+            </p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Bảo Mật Tuyệt Đối</h3>
+            <p>
+              Mã hóa dữ liệu đầu vào và kết quả, đảm bảo an toàn thông tin khách
+              hàng
+            </p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-history"></i>
+            </div>
+            <h3>Lưu Trữ Lịch Sử</h3>
+            <p>
+              Tự động lưu lại các dự đoán để phân tích xu hướng và cải thiện độ
+              chính xác
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section>
+        <h2 class="section-title">Đội Ngũ Chuyên Gia</h2>
+        <div class="team">
+          <div class="team-member">
+            <div class="member-img">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="member-info">
+              <h3>Nguyễn Văn A</h3>
+              <p>Trưởng Phòng AI</p>
+              <p>Tiến sĩ Trí Tuệ Nhân Tạo - ĐH Stanford</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="member-img">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="member-info">
+              <h3>Trần Thị B</h3>
+              <p>Chuyên Gia Data Science</p>
+              <p>Thạc sĩ Khoa Học Dữ Liệu - ĐH Bách Khoa</p>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="member-img">
+              <i class="fas fa-user-cog"></i>
+            </div>
+            <div class="member-info">
+              <h3>Lê Văn C</h3>
+              <p>Kỹ Sư Phần Mềm</p>
+              <p>10+ năm kinh nghiệm phát triển hệ thống AI</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <h2 class="section-title">Liên Hệ Với Chúng Tôi</h2>
+        <p>
+          Nếu bạn có bất kỳ câu hỏi hoặc cần tư vấn về giải pháp, vui lòng liên
+          hệ:
+        </p>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div>
+              <h3>Địa Chỉ</h3>
+              <p>Tòa nhà Techcombank, 23 Lê Duẩn, Q.1, TP.HCM</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div>
+              <h3>Điện Thoại</h3>
+              <p>(028) 3823 4567</p>
+              <p>Hotline: 0909 123 456</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <p>info@predictai.vn</p>
+              <p>support@predictai.vn</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Bảo hiểm AI</h3>
+            <p>
+              Công nghệ AI tiên tiến giúp dự đoán chi phí bảo hiểm chính xác và
+              nhanh chóng.
+            </p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+              <li><a href="{{ url_for('about') }}">Giới thiệu</a></li>
+              <li><a href="{{ url_for('predict') }}">Dự đoán bảo hiểm</a></li>
+              <li><a href="{{ url_for('history') }}">Lịch sử dự đoán</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Hỗ trợ</h3>
+            <ul>
+              <li><a href="#">Câu hỏi thường gặp</a></li>
+              <li><a href="#">Hướng dẫn sử dụng</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+              <li><a href="#">Điều khoản dịch vụ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1,
+                TP.HCM
+              </li>
+              <li><i class="fas fa-phone"></i> (028) 1234 5678</li>
+              <li><i class="fas fa-envelope"></i> info@baohiemai.com</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Bảo hiểm AI. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

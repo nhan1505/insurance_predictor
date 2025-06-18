@@ -1,0 +1,25 @@
+# Flask web framework
+Flask==3.1.1
+Jinja2==3.1.6
+Werkzeug==3.1.3
+itsdangerous==2.2.0
+click==8.2.1
+blinker==1.9.0
+MarkupSafe==3.0.2
+flask_login
+
+# Machine Learning
+scikit-learn==1.7.0
+joblib==1.5.1
+threadpoolctl==3.6.0
+scipy==1.15.3
+numpy==2.3.0
+pandas==2.3.0
+pymssql
+# Time/date dependencies
+python-dateutil==2.9.0.post0
+pytz==2025.2
+tzdata==2025.2
+
+# Compatibility helper
+six==1.17.0

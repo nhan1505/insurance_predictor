@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quản lý dự đoán</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='manage_users.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Lịch sử dự đoán</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Người dùng</th>
+            <th>Tuổi</th>
+            <th>Giới tính</th>
+            <th>BMI</th>
+            <th>Hút thuốc</th>
+            <th>Vùng</th>
+            <th>Kết quả ($)</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in predictions %}
+          <tr>
+            <td>{{ p.FullName }}</td>
+            <td>{{ p.Age }}</td>
+            <td>{{ 'Nam' if p.Gender else 'Nữ' }}</td>
+            <td>{{ p.BMI }}</td>
+            <td>{{ 'Có' if p.Smoke else 'Không' }}</td>
+            <td>
+              {% if p.Region == 0 %}Bắc {% elif p.Region == 1 %}Trung {% else
+              %}Nam {% endif %}
+            </td>
+            <td>{{ p.PredictedCost }}</td>
+            <td>
+              <form
+                action="{{ url_for('delete_prediction', prediction_id=p.PredictionID) }}"
+                method="POST"
+                onsubmit="return confirm('Bạn có chắc muốn xoá dự đoán này?');"
+              >
+                <button type="submit" class="btn-danger">Xoá</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{{ url_for('admin_home') }}" class="btn">Quay lại</a>
+    </div>
+  </body>
+</html>

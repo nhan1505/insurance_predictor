@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!-- templates/index.html -->
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảo hiểm AI - Trang chủ</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-shield-alt"></i>
+          <span>BẢO HIỂM AI</span>
+        </div>
+        <nav>
+          <a href="{{ url_for('index') }}" class="active"
+            ><i class="fas fa-home"></i> Trang chủ</a
+          >
+          <a href="{{ url_for('about') }}"
+            ><i class="fas fa-info-circle"></i> Giới thiệu</a
+          >
+          <a href="{{ url_for('predict') }}"
+            ><i class="fas fa-chart-line"></i> Dự đoán</a
+          >
+          <a href="{{ url_for('history') }}"
+            ><i class="fas fa-history"></i> Lịch sử</a
+          >
+          {% if current_user.is_authenticated and current_user.role == 'admin'
+          %}
+          <a href="{{ url_for('manage_users') }}">Quản lý tài khoản</a>
+          <a href="{{ url_for('manage_predictions') }}">Quản lý dự đoán</a>
+          {% endif %} {% if current_user.is_authenticated and current_user.role
+          == 'user' %}
+          <a href="{{ url_for('profile') }}"
+            ><i class="fas fa-id-card"></i> Hồ sơ cá nhân</a
+          >
+          {% endif %} {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}"
+            ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+          >
+          {% else %}
+          <a href="{{ url_for('login') }}"
+            ><i class="fas fa-sign-in-alt"></i> Đăng nhập</a
+          >
+          {% endif %}
+        </nav>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="hero-content">
+            <h1>Dự đoán chi phí bảo hiểm chính xác với AI</h1>
+            <p class="subtitle">
+              Công nghệ trí tuệ nhân tạo tiên tiến giúp bạn ước tính chi phí bảo
+              hiểm nhanh chóng và chính xác
+            </p>
+            <div class="hero-buttons">
+              <a href="{{ url_for('predict') }}" class="btn btn-primary">
+                <i class="fas fa-calculator"></i> Dự đoán ngay
+              </a>
+              <a href="{{ url_for('about') }}" class="btn btn-outline">
+                <i class="fas fa-play-circle"></i> Xem hướng dẫn
+              </a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <img
+              src="https://baohiemxahoi.gov.vn:4545/pic/GDDT/news/636070870391875028.jpg"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features-section">
+        <div class="container">
+          <h2 class="section-title">Tại sao chọn chúng tôi?</h2>
+          <p class="section-subtitle">
+            Những lợi ích khi sử dụng dịch vụ dự đoán bảo hiểm của chúng tôi
+          </p>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3>Nhanh chóng</h3>
+              <p>
+                Nhận kết quả dự đoán chỉ trong vài giây với công nghệ AI tiên
+                tiến
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+              <h3>Chính xác</h3>
+              <p>
+                Độ chính xác lên đến 85% nhờ thuật toán machine learning hiện
+                đại
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <h3>Bảo mật</h3>
+              <p>Thông tin cá nhân được mã hóa và bảo mật tuyệt đối</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <h3>Lưu trữ</h3>
+              <p>Tự động lưu lại lịch sử dự đoán để tiện theo dõi và so sánh</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section class="how-it-works">
+        <div class="container">
+          <h2 class="section-title">Cách sử dụng đơn giản</h2>
+          <p class="section-subtitle">
+            Chỉ với 3 bước đơn giản để nhận dự đoán chi phí bảo hiểm
+          </p>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h3>Nhập thông tin</h3>
+              <p>
+                Điền các thông tin cơ bản về tuổi, giới tính, BMI và thói quen
+                sinh hoạt
+              </p>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <h3>Phân tích AI</h3>
+              <p>
+                Hệ thống sẽ phân tích và tính toán dựa trên thuật toán machine
+                learning
+              </p>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <h3>Nhận kết quả</h3>
+              <p>Xem ngay kết quả dự đoán chi phí bảo hiểm chính xác</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section class="testimonials">
+        <div class="container">
+          <h2 class="section-title">Khách hàng nói gì về chúng tôi</h2>
+          <p class="section-subtitle">
+            Những phản hồi từ khách hàng đã sử dụng dịch vụ
+          </p>
+
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <p>
+                  "Dự đoán rất chính xác, giúp tôi chuẩn bị tài chính tốt hơn
+                  cho kế hoạch mua bảo hiểm."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <img
+                  src="https://smilemedia.vn/wp-content/uploads/2022/09/cach-chup-hinh-the-dep.jpeg"
+                  alt="Nguyễn Văn A"
+                />
+                <div class="author-info">
+                  <h4>Nguyễn Văn A</h4>
+                  <p>Doanh nhân, Hà Nội</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <p>
+                  "Giao diện dễ sử dụng, kết quả nhanh chóng. Tôi rất hài lòng
+                  với dịch vụ này."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <img
+                  src="https://smilemedia.vn/wp-content/uploads/2022/09/cach-chup-anh-the-dep-e1664379835782.jpg"
+                  alt="Nguyễn Văn A"
+                />
+                <div class="author-info">
+                  <h4>Trần Thị B</h4>
+                  <p>Giáo viên, TP.HCM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <h2>Bạn đã sẵn sàng để dự đoán chi phí bảo hiểm?</h2>
+          <p>
+            Đăng ký tài khoản ngay để lưu lại lịch sử dự đoán và nhận nhiều ưu
+            đãi
+          </p>
+          <div class="cta-buttons">
+            <a href="{{ url_for('register') }}" class="btn btn-primary">
+              <i class="fas fa-user-plus"></i> Đăng ký ngay
+            </a>
+            <a href="{{ url_for('predict') }}" class="btn btn-outline">
+              <i class="fas fa-calculator"></i> Dùng thử ngay
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Bảo hiểm AI</h3>
+            <p>
+              Công nghệ AI tiên tiến giúp dự đoán chi phí bảo hiểm chính xác và
+              nhanh chóng.
+            </p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+              <li><a href="{{ url_for('about') }}">Giới thiệu</a></li>
+              <li><a href="{{ url_for('predict') }}">Dự đoán bảo hiểm</a></li>
+              <li><a href="{{ url_for('history') }}">Lịch sử dự đoán</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Hỗ trợ</h3>
+            <ul>
+              <li><a href="#">Câu hỏi thường gặp</a></li>
+              <li><a href="#">Hướng dẫn sử dụng</a></li>
+              <li><a href="#">Chính sách bảo mật</a></li>
+              <li><a href="#">Điều khoản dịch vụ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1,
+                TP.HCM
+              </li>
+              <li><i class="fas fa-phone"></i> (028) 1234 5678</li>
+              <li><i class="fas fa-envelope"></i> info@baohiemai.com</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Bảo hiểm AI. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
